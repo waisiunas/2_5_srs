@@ -1,10 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<?php 
-$title = 'Template';
-require_once 'includes/head.php';
- ?>
+<?php require_once 'includes/head.php'; ?>
 
 <body>
 	<div class="wrapper">

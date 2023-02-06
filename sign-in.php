@@ -1,9 +1,31 @@
 <?php require_once 'database/connection.php'; ?>
 
 <?php
-
+session_start();
+$title = 'Sign In';
 $error = $email = "";
 
+if(isset($_POST['signin'])) {
+	$email = htmlspecialchars($_POST['email']);
+	$password = htmlspecialchars($_POST['password']);
+
+	if(empty($email)) {
+		$error = "Please enter your E-mail!";
+	} elseif(empty($password)) {
+		$error = "Please enter your Password!";
+	} else {
+		$new_password = sha1($password);
+		$sql = "SELECT `id` FROM `admins` WHERE `email` = '$email' AND `password` = '$new_password'";
+		$result = $conn->query($sql);
+		if($result->num_rows > 0) {
+			$admin = $result->fetch_assoc();
+			$_SESSION['admin_id'] = $admin['id'];
+			header('location: ./template.php');
+		} else {
+			$error = "Invalid Combination!";
+		}
+	}
+}
 ?>
 
 <!DOCTYPE html>
